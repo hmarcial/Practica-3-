@@ -5,26 +5,42 @@
 #fuses NOPBADEN, NOMCLR, STVREN, NOLVP, NODEBUG
 #use delay(clock=16000000)
 #use fast_io(c)
-#int_RDA
-char Cadena[25];
-float flotante;
-int i =0;
 #define __DEBUG_SERIAL__ //Si comentas esta linea se deshabilita el debug por serial y el PIN_C6 puede ser usado en forma digital I/O
 #use RS232(BAUD=9600, XMIT=PIN_C6, RCV=PIN_C7, BITS=8, PARITY=N, STOP=1)
-
+void clean(void);
+char Numero[25];
+float result = 0;
+int i=0;
+int caluclo =0;
+#INT_RDA
 void main (void){
-SET_TRIS_C(0x80);
-   enable_interrupts(INT_RDA);
-   enable_interrupts(GLOBAL);
-while(TRUE){
-   {
-   printf("Teclea Numero 1: ");
-   if(kbhit()){
-   Cadena[i] = getch();
-   i++;
+    //printf("\fIngresa los datos=\n");
+    while(TRUE){
+    if(kbhit()){
+        Numero[i]=getch();
+        if(Numero[i]>=42 && Numero[i]<=62 || Numero[i]==13){
+            printf("%c",Numero[i]);
+            if(Numero[i]==13){
+            caluclo=1;
+        }
+        i++;
+        if(caluclo == 1){
+        result = atof(Numero);
+        printf("%f \n",result);
+        clean();
+        }
+    }
    }
-   }while(Cadena[i]!= 97);
-   flotante = atof(Cadena);
-   printf("%f",flotante);
+   }
 }
-}
+void clean(void){
+       result=0;
+       for(int clear=0; clear<i;clear++){
+          if(Numero[clear]!=NULL){
+              Numero[clear]=NULL;
+         }
+      }
+      i=0;
+      caluclo=0;
+
+   }
