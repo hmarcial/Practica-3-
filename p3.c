@@ -10,10 +10,13 @@
 void clean(void);
 char Numero[25];
 char Numero2[25];
+char operacion[4];
 float result = 0;
 float result2 = 0;
+float fin=0;
 int i=0;
 int j=0;
+int k=0;
 int caluclo =0;
 int calculo =0;
 #INT_RDA
@@ -28,14 +31,38 @@ void main (void){
             if(Numero2[j]==13){
                 calculo=2;
             }
-        
             j++;
             if(calculo==2){
+            operacion[k] = getch();
+            if(operacion[k]==42 || operacion[k]==43 || operacion[k]==45 || operacion[k] ==47){
+            printf("%c",operacion[k]);
             result = atof(Numero);
             result2 = atof(Numero2);
-            printf("%f \n",result);
-            printf("%f \n",result2);
+            switch(operacion[k])
+            {
+            case '+':
+            fin= result + result2;
+            printf("%.4f \n",fin);
             clean();
+            break;
+            case '-':
+            fin= result - result2;
+            printf("%.4f \n",fin);
+            clean();
+            break;
+            case '*':
+            fin= result * result2;
+            printf("%.4f \n",fin);
+            clean();
+            break;
+            case '/':
+            fin= result / result2;
+            printf("%.4f \n",fin);
+            clean();
+            break;
+            }
+            k++;
+            }
             }
         }
     
@@ -46,7 +73,6 @@ void main (void){
             if(Numero[i]==13){
             caluclo=1;
         }
-        
         i++;
         }
     }
@@ -55,12 +81,27 @@ void main (void){
 }
 void clean(void){
        result=0;
+       result2=0;
+       fin=0;
        for(int clear=0; clear<i;clear++){
           if(Numero[clear]!=NULL){
               Numero[clear]=NULL;
          }
       }
+      for(int cle=0; cle<j;cle++){
+          if(Numero2[cle]!=NULL){
+              Numero2[cle]=NULL;
+         }
+      }
+      for(int cl=0; cl<k;cl++){
+          if(operacion[cl]!=NULL){
+              operacion[cl]=NULL;
+         }
+      }
+      k=0;
       i=0;
+      j=0;
       caluclo=0;
+      calculo=0;
 
    }
