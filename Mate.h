@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#fuses HS, NOFCMEN, NOIESO, PUT, NOBROWNOUT, NOWDT
 #fuses NOPBADEN, NOMCLR, STVREN, NOLVP, NODEBUG
 #use delay(clock=16000000)
 #use fast_io(c)
