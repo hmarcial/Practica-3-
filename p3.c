@@ -2,16 +2,17 @@
 void clean(void);
 void total(void);
 char cadena[50];
-float result = 0;
-float result2 = 0;
-int h=0;
+float resultado = 0;
+float resultado2 = 0;
+int puntero=0;
 int flagRecibido = 0;
 int Caso = 0;
 #INT_RDA
 void serial_isr(){
   if(kbhit()){
-      cadena[h]=getch();  
+      cadena[puntero]=getch();  
       flagRecibido=1;
+      puntero++;
   }
 }
 void main (void){
@@ -21,39 +22,58 @@ void main (void){
     while(TRUE){
       if(flagRecibido==1){
          flagRecibido=0;
+        /*if(cadena[h-1] == 13){
         
+            if(Caso==0){
+                  result=atof(cadena);
+                  printf("\n\r");
+                  printf("%f",result);
+                  printf("\n\r"); 
+            }
+            if(Caso==1){
+                  result2=atof(cadena);
+                  printf("\n\r");
+                  printf("%f",result2);
+                  printf("\n\r");                   
+            }
+            Caso++;
+            clean();
+        }*/        
         switch(Caso){
           case 0:
-            if(cadena[h]>=48 && cadena[h]<=57 || cadena[h]==43 || cadena[h] ==45 || cadena[h] ==46 ){
-               printf("%c",cadena[h]);
-               h++;
+            if(cadena[puntero-1]>=48 && cadena[puntero-1]<=57 || cadena[puntero-1]==43 || cadena[puntero-1] ==45 || cadena[puntero-1] ==46 ){
+               printf("%c",cadena[puntero-1]);         
             }
-             if(cadena[h] == 13){
-                 result=atof(cadena);
+             if(cadena[puntero-1] == 13){
+                 resultado=atof(cadena);
                  printf("\n\r");
-                 printf("%f",result);
+                 printf("%f",resultado);
                  printf("\n\r");
                  clean();
-                 Caso = 1;}
+                 Caso = 1;
+                 }
          break;
          case 1:
-            if(cadena[h]>=48 && cadena[h]<=57 || cadena[h]==43 || cadena[h] ==45 || cadena[h] ==46 ){
-               printf("%c",cadena[h]);         
-               h++;
+            if(cadena[puntero-1]>=48 && cadena[puntero-1]<=57 || cadena[puntero-1]==43 || cadena[puntero-1] ==45 || cadena[puntero-1] ==46 ){
+               printf("%c",cadena[puntero-1]);         
             }
-            if(cadena[h] == 13){
-               result2=atof(cadena);
+            if(cadena[puntero-1] == 13){
+               resultado2=atof(cadena);
                printf("\n\r");
-               printf("%f",result2);
+               printf("%f",resultado2);
                printf("\n\r");
                clean();
                Caso = 2;
             }
          break;
          case 2:
-            if(cadena[h]==42 || cadena[h]==43 || cadena[h]==45 || cadena[h] ==47){
-               printf("%c",cadena[h]);
-               operaciones(cadena,h,result,result2);
+            if(cadena[puntero-1]==42 || cadena[puntero-1]==43 || cadena[puntero-1]==45 || cadena[puntero-1] ==47){
+               printf("%c",cadena[puntero-1]);
+               operaciones(cadena,puntero-1,resultado,resultado2);
+            }else{
+               printf("Error No Numero en esta parte");
+               getch();
+               printf("\f");
             }
             clean();
             total();
@@ -65,15 +85,15 @@ void main (void){
   }
 }
 void clean(void){
-      for(int c=0; c<=h;c++){
+      for(int c=0; c<=puntero;c++){
           if(cadena[c]!=NULL){
               cadena[c]=NULL;
          }
       }
-      h=0;
+      puntero=0;
 }
 void total(void){
-   result = 0;
-   result2 = 0;
+   resultado = 0;
+   resultado2 = 0;
    Caso = 0;
 }
