@@ -1,3 +1,4 @@
+#include <18F4620.h>
 #include <stdio.h>
 #include <stdlib.h>
 #fuses HS, NOFCMEN, NOIESO, PUT, NOBROWNOUT, NOWDT
@@ -6,9 +7,9 @@
 #use fast_io(c)
 #define __DEBUG_SERIAL__ //Si comentas esta linea se deshabilita el debug por serial y el PIN_C6 puede ser usado en forma digital I/O
 #use RS232(BAUD=9600, XMIT=PIN_C6, RCV=PIN_C7, BITS=8, PARITY=N, STOP=1)
-void operaciones(char operacion[],int k,float result,float result2){
+void operaciones(char operacion,float result,float result2){
 float fin =0;
-switch(operacion[k])
+switch(operacion)
             {
             case '+':
             fin= result + result2;
